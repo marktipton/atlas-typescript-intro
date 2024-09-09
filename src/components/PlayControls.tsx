@@ -2,19 +2,25 @@ import React, {useState} from 'react'
 
 const PlayControls = () => {
   const [speed, setSpeed] = useState<'1x' | '2x' | '3x'>('1x');
+  const [play, setPlay] = useState<boolean>(false);
 
   const speedClick = () => {
-      setSpeed((prevSpeed) => {
-        switch (prevSpeed) {
-          case '1x':
-            return '2x';
-          case '2x':
-            return '3x';
-          case '3x':
-            return '1x';
-        }
-      });
-    };
+    setSpeed((prevSpeed) => {
+      switch (prevSpeed) {
+        case '1x':
+          return '2x';
+        case '2x':
+          return '3x';
+        case '3x':
+          return '1x';
+      }
+    });
+  };
+
+  const playClick = () => {
+    setPlay((prevState) => !prevState);
+  };
+
 
   return (
     <div className='flex justify-between items-center h-8'>
@@ -24,10 +30,16 @@ const PlayControls = () => {
           <path d="M9.195 18.44c1.25.714 2.805-.189 2.805-1.629v-2.34l6.945 3.968c1.25.715 2.805-.188 2.805-1.628V8.69c0-1.44-1.555-2.343-2.805-1.628L12 11.029v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256l7.108 4.061Z" />
         </svg>
       </button>
-      <button className='outline rounded'>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-        <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" />
-      </svg>
+      <button className='outline rounded' onClick={playClick}>
+        {play ? (
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+          </svg>
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+            <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" />
+          </svg>
+        )}
       </button>
       <button>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
