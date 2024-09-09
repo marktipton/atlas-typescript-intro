@@ -1,11 +1,15 @@
 import React from 'react'
 
-const SongTitle = () => {
+type songTitleProps = {
+  title: String;
+};
+
+function SongTitle({title}: songTitleProps) {
   return (
     <div>
       <h1 className='font-bold text-xl text-primary'>Tidal Drift</h1>
       <p className='text-secondary'>
-        Echoes of the Sea
+        {title}
       </p>
     </div>
   )
