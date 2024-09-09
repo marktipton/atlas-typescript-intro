@@ -13,9 +13,13 @@ type CurrentlyPlayingProps = {
     duration: string;
     cover: string;
   } | null;
+  onNextSong: () => void;
+  onPrevSong: () => void;
+  isPrevDisabled: boolean;
+  isNextDisabled: boolean;
 };
 
-function CurrentlyPlaying({ currentSong }: CurrentlyPlayingProps) {
+function CurrentlyPlaying({ currentSong, onNextSong, onPrevSong, isPrevDisabled, isNextDisabled }: CurrentlyPlayingProps) {
   if (!currentSong) {
     return <div>Loading...</div>;
   }
@@ -24,7 +28,12 @@ function CurrentlyPlaying({ currentSong }: CurrentlyPlayingProps) {
     <div className='flex flex-col justify-between p-6 md:w-1/2'>
       <CoverArt cover={currentSong.cover}/>
       <SongTitle title={currentSong.title} artist={currentSong.artist}/>
-      <PlayControls/>
+      <PlayControls
+        onNextSong={onNextSong}
+        onPrevSong={onPrevSong}
+        isPrevDisabled={isPrevDisabled}
+        isNextDisabled={isNextDisabled}
+      />
       <VolumeControl/>
     </div>
   )

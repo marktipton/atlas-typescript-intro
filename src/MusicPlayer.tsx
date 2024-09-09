@@ -14,6 +14,7 @@ type PlaylistItem = {
 export default function MusicPlayer() {
   const [playlist, setPlaylist] = useState<PlaylistItem[]>([]);
   const [currentSong, setCurrentSong] = useState<PlaylistItem | null>(null);
+  const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
 
   useEffect(() => {
     const fetchPlaylistData = async () => {
@@ -24,19 +25,46 @@ export default function MusicPlayer() {
       const data: PlaylistItem[] = await response.json();
       setPlaylist(data);
       if (data.length > 0) {
-        setCurrentSong(data[0]); // Set the first song as the current song initially
+        setCurrentSong(data[0]);
+        setCurrentSongIndex(0);
       }
     };
 
     fetchPlaylistData();
   }, []);
 
-  console.log('Playlist state:', playlist); // Log the playlist state
+  const handleNextSong = () => {
+    if (currentSongIndex < playlist.length - 1) {
+      const nextIndex = currentSongIndex + 1;
+      setCurrentSong(playlist[nextIndex]);
+      setCurrentSongIndex(nextIndex);
+    }
+  };
+
+  const handlePrevSong = () => {
+    if (currentSongIndex > 0) {
+      const prevIndex = currentSongIndex - 1;
+      setCurrentSong(playlist[prevIndex]);
+      setCurrentSongIndex(prevIndex);
+    }
+  };
+
+  const isPrevDisabled = currentSongIndex === 0;
+  const isNextDisabled = currentSongIndex === playlist.length - 1
 
   return (
     <div className="flex flex-col md:flex-row shadow-lg rounded-lg divide-x divide-y">
-      <CurrentlyPlaying currentSong={currentSong} />
-      <Playlist playlist={playlist} currentSong={currentSong}/>
+      <CurrentlyPlaying
+        currentSong={currentSong}
+        onNextSong={handleNextSong}
+        onPrevSong={handlePrevSong}
+        isPrevDisabled={isPrevDisabled}
+        isNextDisabled={isNextDisabled}
+      />
+      <Playlist
+        playlist={playlist}
+        currentSong={currentSong}
+      />
     </div>
   );
 }
