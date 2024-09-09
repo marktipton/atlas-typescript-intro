@@ -16,6 +16,10 @@ type CurrentlyPlayingProps = {
 };
 
 function CurrentlyPlaying({ currentSong }: CurrentlyPlayingProps) {
+  if (!currentSong) {
+    return <div>Loading...</div>;  // Handle the case where currentSong is null
+  }
+
   return (
     <div className='flex flex-col justify-between p-6 md:w-1/2'>
       <CoverArt cover={currentSong.cover}/>
