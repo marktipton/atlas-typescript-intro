@@ -1,4 +1,4 @@
-# Atlas Music Player
+# Atlas Typescript Intro
 
 ## Getting Started
 
