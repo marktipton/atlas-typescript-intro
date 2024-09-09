@@ -5,11 +5,13 @@ type PlayControlsProps = {
   onPrevSong: () => void;
   isPrevDisabled: boolean;
   isNextDisabled: boolean;
+  onShuffleToggle: (isShuffled: boolean) => void;
 };
 
-const PlayControls = ({ onNextSong, onPrevSong, isPrevDisabled, isNextDisabled }: PlayControlsProps) => {
+const PlayControls = ({ onNextSong, onPrevSong, isPrevDisabled, isNextDisabled, onShuffleToggle }: PlayControlsProps) => {
   const [speed, setSpeed] = useState<'1x' | '2x' | '3x'>('1x');
   const [play, setPlay] = useState<boolean>(false);
+  const [isShuffled, setIsShuffled] = useState<boolean>(false);
 
   const speedClick = () => {
     setSpeed((prevSpeed) => {
@@ -28,6 +30,11 @@ const PlayControls = ({ onNextSong, onPrevSong, isPrevDisabled, isNextDisabled }
     setPlay((prevState) => !prevState);
   };
 
+  const shuffleClick = () => {
+    const newShuffleState = !isShuffled;
+    setIsShuffled(newShuffleState);
+    onShuffleToggle(newShuffleState);
+  };
 
   return (
     <div className='flex justify-between items-center h-8'>
@@ -53,8 +60,8 @@ const PlayControls = ({ onNextSong, onPrevSong, isPrevDisabled, isNextDisabled }
           <path d="M5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256l-7.108-4.061C13.555 6.346 12 7.249 12 8.689v2.34L5.055 7.061Z" />
         </svg>
       </button>
-      <button>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+      <button onClick={shuffleClick} className={`${isShuffled ? 'text-accent-bright' : 'text-primary'}`}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`size-6 ${isShuffled ? 'text-accent-bright' : 'text-primary'}`}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
         </svg>
       </button>

@@ -15,6 +15,7 @@ export default function MusicPlayer() {
   const [playlist, setPlaylist] = useState<PlaylistItem[]>([]);
   const [currentSong, setCurrentSong] = useState<PlaylistItem | null>(null);
   const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
+  const [isShuffled, setIsShuffled] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPlaylistData = async () => {
@@ -49,8 +50,12 @@ export default function MusicPlayer() {
     }
   };
 
-  const isPrevDisabled = currentSongIndex === 0;
-  const isNextDisabled = currentSongIndex === playlist.length - 1
+  const handleShuffleToggle = (isShuffled: boolean) => {
+    setIsShuffled(isShuffled);
+  };
+
+  const isPrevDisabled = currentSongIndex === 0 && !isShuffled;
+  const isNextDisabled = (currentSongIndex === playlist.length - 1 && !isShuffled) || playlist.length === 0;
 
   return (
     <div className="flex flex-col md:flex-row shadow-lg rounded-lg divide-x divide-y">
@@ -60,6 +65,7 @@ export default function MusicPlayer() {
         onPrevSong={handlePrevSong}
         isPrevDisabled={isPrevDisabled}
         isNextDisabled={isNextDisabled}
+        onShuffleToggle={handleShuffleToggle}
       />
       <Playlist
         playlist={playlist}

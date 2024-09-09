@@ -17,9 +17,10 @@ type CurrentlyPlayingProps = {
   onPrevSong: () => void;
   isPrevDisabled: boolean;
   isNextDisabled: boolean;
+  onShuffleToggle: (isShuffled: boolean) => void;
 };
 
-function CurrentlyPlaying({ currentSong, onNextSong, onPrevSong, isPrevDisabled, isNextDisabled }: CurrentlyPlayingProps) {
+function CurrentlyPlaying({ currentSong, onNextSong, onPrevSong, isPrevDisabled, isNextDisabled, onShuffleToggle }: CurrentlyPlayingProps) {
   if (!currentSong) {
     return <div>Loading...</div>;
   }
@@ -33,6 +34,7 @@ function CurrentlyPlaying({ currentSong, onNextSong, onPrevSong, isPrevDisabled,
         onPrevSong={onPrevSong}
         isPrevDisabled={isPrevDisabled}
         isNextDisabled={isNextDisabled}
+        onShuffleToggle={onShuffleToggle}
       />
       <VolumeControl/>
     </div>
