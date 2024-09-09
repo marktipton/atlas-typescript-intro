@@ -1,10 +1,13 @@
 import React from 'react'
-import placeholder from '../assets/placeholder.svg'
 
-const CoverArt = () => {
+type CoverArtProps = {
+  cover: string;
+};
+
+function CoverArt({cover}: CoverArtProps) {
   return (
     <div>
-      <img src={placeholder} alt="CoverArt" className='rounded-lg'/>
+      <img src={cover} alt="CoverArt" className='rounded-lg w-full h-auto'/>
     </div>
   )
 }

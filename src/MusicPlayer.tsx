@@ -23,6 +23,9 @@ export default function MusicPlayer() {
       }
       const data: PlaylistItem[] = await response.json();
       setPlaylist(data);
+      if (data.length > 0) {
+        setCurrentSong(data[0]); // Set the first song as the current song initially
+      }
     };
 
     fetchPlaylistData();
@@ -31,9 +34,9 @@ export default function MusicPlayer() {
   console.log('Playlist state:', playlist); // Log the playlist state
 
   return (
-  <div className="flex flex-col md:flex-row shadow-lg rounded-lg divide-x divide-y">
-    <CurrentlyPlaying currentSong={currentSong} />
-    <Playlist playlist={playlist} />
-  </div>
+    <div className="flex flex-col md:flex-row shadow-lg rounded-lg divide-x divide-y">
+      <CurrentlyPlaying currentSong={currentSong} />
+      <Playlist playlist={playlist} />
+    </div>
   );
 }
