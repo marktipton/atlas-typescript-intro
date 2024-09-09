@@ -4,7 +4,7 @@ type PlayListItemProps = {
   name: string;
   artist: string;
   time: string;
-  bgColor: string;
+  bgColor?: string;
 };
 
 function PlayListItem({ name, artist, time, bgColor }: PlayListItemProps) {
