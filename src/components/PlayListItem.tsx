@@ -1,13 +1,13 @@
 import React from 'react'
 
-interface PlayListItemProps {
+type PlayListItemProps = {
   name: string;
   artist: string;
   time: string;
   bgColor: string;
-}
+};
 
-const PlayListItem: React.FC<PlayListItemProps> = ({ name, artist, time, bgColor }) => {
+function PlayListItem({ name, artist, time, bgColor }: PlayListItemProps) {
   return (
     <div className={`flex w-full items-center justify-between ${bgColor} rounded-lg`}>
       <div>
