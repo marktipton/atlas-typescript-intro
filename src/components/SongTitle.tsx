@@ -1,8 +1,8 @@
 import React from 'react'
 
 type songTitleProps = {
-  title: String;
-  artist: String;
+  title: string;
+  artist: string;
 };
 
 function SongTitle({title, artist}: songTitleProps) {
