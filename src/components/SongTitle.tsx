@@ -2,14 +2,15 @@ import React from 'react'
 
 type songTitleProps = {
   title: String;
+  artist: String;
 };
 
-function SongTitle({title}: songTitleProps) {
+function SongTitle({title, artist}: songTitleProps) {
   return (
     <div>
-      <h1 className='font-bold text-xl text-primary'>Tidal Drift</h1>
+      <h1 className='font-bold text-xl text-primary'>{title}</h1>
       <p className='text-secondary'>
-        {title}
+        {artist}
       </p>
     </div>
   )
