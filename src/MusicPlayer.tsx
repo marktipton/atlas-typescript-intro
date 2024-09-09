@@ -36,7 +36,7 @@ export default function MusicPlayer() {
   return (
     <div className="flex flex-col md:flex-row shadow-lg rounded-lg divide-x divide-y">
       <CurrentlyPlaying currentSong={currentSong} />
-      <Playlist playlist={playlist} />
+      <Playlist playlist={playlist} currentSong={currentSong}/>
     </div>
   );
 }

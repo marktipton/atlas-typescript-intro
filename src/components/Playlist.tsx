@@ -12,9 +12,10 @@ type PlaylistItem = {
 
 type PlaylistProps = {
   playlist: PlaylistItem[];
+  currentSong: PlaylistItem | null;
 };
 
-function Playlist({playlist}: PlaylistProps) {
+function Playlist({playlist, currentSong}: PlaylistProps) {
   return (
     <div className='p-6 md:w-1/2'>
       <h1 className='font-medium text-xl pb-4'>Playlist</h1>
@@ -24,7 +25,7 @@ function Playlist({playlist}: PlaylistProps) {
           name={item.title}
           artist={item.artist}
           time={item.duration}
-          bgColor="bg-secondary-light"  // or another color based on your needs
+          bgColor={currentSong && currentSong.id === item.id ? "bg-secondary-light" : ''}
         />
       ))}
     </div>
