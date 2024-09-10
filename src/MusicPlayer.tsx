@@ -54,6 +54,11 @@ export default function MusicPlayer() {
     setIsShuffled(isShuffled);
   };
 
+  const handleSongClick = (song: PlaylistItem, index: number) => {
+    setCurrentSong(song);
+    setCurrentSongIndex(index);  // Update current song and index
+  };
+
   const isPrevDisabled = currentSongIndex === 0 && !isShuffled;
   const isNextDisabled = (currentSongIndex === playlist.length - 1 && !isShuffled) || playlist.length === 0;
 
@@ -70,6 +75,7 @@ export default function MusicPlayer() {
       <Playlist
         playlist={playlist}
         currentSong={currentSong}
+        handleSongClick={handleSongClick}
       />
     </div>
   );
