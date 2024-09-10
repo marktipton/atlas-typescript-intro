@@ -51,10 +51,23 @@ export default function MusicPlayer() {
 
 
   const handlePrevSong = () => {
-    if (currentSongIndex > 0) {
-      const prevIndex = currentSongIndex - 1;
-      setCurrentSong(playlist[prevIndex]);
-      setCurrentSongIndex(prevIndex);
+    if (isShuffled) {
+      if (playedSongs.length > 1) {
+        // Remove the current song from playedSongs and go back to the previous song
+        const newPlayedSongs = [...playedSongs];
+        newPlayedSongs.pop(); // Remove the current song
+        const prevSongIndex = newPlayedSongs[newPlayedSongs.length - 1]; // Get the previous song
+
+        setPlayedSongs(newPlayedSongs); // Update playedSongs
+        setCurrentSong(playlist[prevSongIndex]);
+        setCurrentSongIndex(prevSongIndex);
+      }
+    } else {
+      if (currentSongIndex > 0) {
+        const prevIndex = currentSongIndex - 1;
+        setCurrentSong(playlist[prevIndex]);
+        setCurrentSongIndex(prevIndex);
+      }
     }
   };
 
