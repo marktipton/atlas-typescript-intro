@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CurrentlyPlaying from './components/CurrentlyPlaying';
 import Playlist from './components/Playlist';
+import { usePlaylistData } from './hooks/usePlaylistData';
 
 type PlaylistItem = {
   id: number;
@@ -12,30 +13,18 @@ type PlaylistItem = {
 };
 
 export default function MusicPlayer() {
-  const [playlist, setPlaylist] = useState<PlaylistItem[]>([]);
+  const { data: playlist, loading } = usePlaylistData(); // data from hook
   const [currentSong, setCurrentSong] = useState<PlaylistItem | null>(null);
   const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
   const [isShuffled, setIsShuffled] = useState<boolean>(false);
   const [playedSongs, setPlayedSongs] = useState<number[]>([]); // keep track of played songs for shuffle mode
 
-  useEffect(() => {
-    const fetchPlaylistData = async () => {
-      const response = await fetch('https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/main/playlist');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data: PlaylistItem[] = await response.json();
-      setPlaylist(data);
-      if (data.length > 0) {
-        setCurrentSong(data[0]);
-        setCurrentSongIndex(0);
-        setPlayedSongs([0]);
-      }
-    };
-
-    fetchPlaylistData();
-  }, []);
-
+  // Set first song after the page loads
+  if (!currentSong && playlist.length > 0) {
+    setCurrentSong(playlist[0]);
+    setCurrentSongIndex(0);
+    setPlayedSongs([0]);
+  }
 
   const handleNextSong = () => {
     if (isShuffled) {
@@ -108,19 +97,25 @@ export default function MusicPlayer() {
 
   return (
     <div className="flex flex-col md:flex-row shadow-lg rounded-lg divide-x divide-y">
-      <CurrentlyPlaying
-        currentSong={currentSong}
-        onNextSong={handleNextSong}
-        onPrevSong={handlePrevSong}
-        isPrevDisabled={isPrevDisabled}
-        isNextDisabled={isNextDisabled}
-        onShuffleToggle={handleShuffleToggle}
-      />
-      <Playlist
-        playlist={playlist}
-        currentSong={currentSong}
-        handleSongClick={handleSongClick}
-      />
-    </div>
+    {loading ? (
+      <div className="text-center p-4">Loading...</div> // Display a loading message
+    ) : (
+      <>
+        <CurrentlyPlaying
+          currentSong={currentSong}
+          onNextSong={handleNextSong}
+          onPrevSong={handlePrevSong}
+          isPrevDisabled={isPrevDisabled}
+          isNextDisabled={isNextDisabled}
+          onShuffleToggle={handleShuffleToggle}
+        />
+        <Playlist
+          playlist={playlist}
+          currentSong={currentSong}
+          handleSongClick={handleSongClick}
+        />
+      </>
+    )}
+  </div>
   );
 }
